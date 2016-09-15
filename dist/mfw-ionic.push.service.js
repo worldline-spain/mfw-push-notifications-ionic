@@ -3,8 +3,8 @@
 
   /**
    * @ngdoc overview
-   * @module mfwi.notifications.push
-   * @name mfwi.notifications.push
+   * @module mfw-ionic.notifications.push
+   * @name mfw-ionic.notifications.push
    *
    * @requires ionic
    * @requires ngCordova
@@ -32,15 +32,15 @@
 
   /**
    * @ngdoc service
-   * @name mfwi.notifications.push.$mfwiPushProvider
+   * @name mfw-ionic.notifications.push.$mfwiPushProvider
    *
    * @description
-   * Provider for {@link mfwi.notifications.push.service:$mfwiPush `$mfwiPush`} service.
+   * Provider for {@link mfw-ionic.notifications.push.service:$mfwiPush `$mfwiPush`} service.
    */
-  PushModule.provider('$mfwiPush', pushProvider);
-  function pushProvider() {
-    var token = undefined;
-    var registrationPromise = undefined;
+  PushModule.provider('$mfwiPush', PushProvider);
+  function PushProvider() {
+    var token;
+    var registrationPromise;
 
     var pushOptions = {
       enabled: false
@@ -48,8 +48,8 @@
 
     /**
      * @ngdoc function
-     * @name mfwi.notifications.push.$mfwiPushProvider#config
-     * @methodOf mfwi.notifications.push.$mfwiPushProvider
+     * @name mfw-ionic.notifications.push.$mfwiPushProvider#config
+     * @methodOf mfw-ionic.notifications.push.$mfwiPushProvider
      *
      * @description
      * Configures push message registration.
@@ -67,7 +67,7 @@
     this.$get = ['$log', '$q', '$window', '$rootScope', '$ionicPlatform', '$cordovaPushV5', function ($log, $q, $window, $rootScope, $ionicPlatform, $cordovaPushV5) {
       /**
        * @ngdoc service
-       * @name mfwi.notifications.push.service:$mfwiPush
+       * @name mfw-ionic.notifications.push.service:$mfwiPush
        *
        * @description
        * Push service for Ionic applications.
@@ -87,14 +87,14 @@
 
       /**
        * @ngdoc method
-       * @name mfwi.notifications.push.service:$mfwiPush#init
-       * @methodOf mfwi.notifications.push.service:$mfwiPush
+       * @name mfw-ionic.notifications.push.service:$mfwiPush#init
+       * @methodOf mfw-ionic.notifications.push.service:$mfwiPush
        * @private
        *
        * @description
        * Initializer method, to be called when module is loaded.
        *
-       * It registers for push notifications, if {@link mfwi.notifications.push.$mfwiPushProvider#config enabled}, once Ionic is ready.
+       * It registers for push notifications, if {@link mfw-ionic.notifications.push.$mfwiPushProvider#config enabled}, once Ionic is ready.
        */
       function init() {
         registrationPromise = $q.defer();
@@ -127,8 +127,8 @@
 
       /**
        * @ngdoc method
-       * @name mfwi.notifications.push.service:$mfwiPush#getToken
-       * @methodOf mfwi.notifications.push.service:$mfwiPush
+       * @name mfw-ionic.notifications.push.service:$mfwiPush#getToken
+       * @methodOf mfw-ionic.notifications.push.service:$mfwiPush
        *
        * @description
        * Returns the push token received by device's push platform.
@@ -141,8 +141,8 @@
 
       /**
        * @ngdoc method
-       * @name mfwi.notifications.push.service:$mfwiPush#onNotificationReceived
-       * @methodOf mfwi.notifications.push.service:$mfwiPush
+       * @name mfw-ionic.notifications.push.service:$mfwiPush#onNotificationReceived
+       * @methodOf mfw-ionic.notifications.push.service:$mfwiPush
        *
        * @description
        * Registers a callback function to be executed when a push message is received.
@@ -159,8 +159,8 @@
 
       /**
        * @ngdoc method
-       * @name mfwi.notifications.push.service:$mfwiPush#onNotificationError
-       * @methodOf mfwi.notifications.push.service:$mfwiPush
+       * @name mfw-ionic.notifications.push.service:$mfwiPush#onNotificationError
+       * @methodOf mfw-ionic.notifications.push.service:$mfwiPush
        *
        * @description
        * Registers a callback function to be executed when an error occurs in the push registration process.

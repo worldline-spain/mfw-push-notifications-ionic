@@ -31,17 +31,17 @@ Download source files and include them into your project sources.
 
 Once dependency has been downloaded, configure your application module(s) to require:
 
-* `mfw.business.actionstore` module: action creator and store (depends on `flux`).
+* `mfw-ionic.notifications.push ` module: provider and service to register for push notifications.
 
 ```js
 angular
   .module('your-module', [
       // Your other dependencies
-      'mfw.business.actionstore'
+      'mfw-ionic.notifications.push'
   ]);
 ```
 
-Now you can inject both `$mfwActions` and `$mfwActionStore` services to register actions and receive their flux events.
+Now you can inject both `$mfwiPush` services to register for push notifications and callbacks with new incomming messages or errors.
 
 
 > For further documentation, please read the generated `ngDocs` documentation inside `docs/` folder.
@@ -49,60 +49,66 @@ Now you can inject both `$mfwActions` and `$mfwActionStore` services to register
 
 ## Usage
 
-### Register an action
+### Configure
 
-To register an action you only need an existing promise, if you already use them, or a function implementing your logic.
-
-**Using a promise**
+Enable or disable push registration and set proper [platform configuration](https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md#pushnotificationinitoptions).
 
 ```js
-var myPromise = $http.get(/**/);
-var actionPromise = $mfwActions.newAction(myPromise);
-var actionId = $mfwActionStore.actionId(actionPromise);
+angular
+  .module('your-module')
+  .config(configPush);
+
+configPush.$inject = ['$mfwiPushProvider'];
+function configPush($mfwiPushProvider) {
+  $mfwiPushProvider.config({
+    enabled: true,
+    android: {
+      senderID: "XXXXXXX"
+    },
+    ios: {
+      alert: "true",
+      badge: "true",
+      sound: "true"
+    },
+    windows: {}
+  });
+}
 ```
 
-**Using a function**
+### Listen
+
+Listen for push notifications and errors.
 
 ```js
-var cleanDb = funtion () {/**/};
-var actionPromise = $mfwActions.newAction(cleanDb);
-var actionId = $mfwActionStore.actionId(actionPromise);
+angular
+  .module('your-module')
+  .run(handlePushes);
+
+handlePushes.$inject = ['$log', '$mfwiPush'];
+function handlePushes($log, $mfwiPush) {
+  $mfwiPush.getToken().then(function (token) {
+    $log.log('Received token', token);
+  });
+
+  // triggered every time notification received
+  $mfwiPush.onNotificationReceived(function (event, data) {
+    $log.log('PUSH received. Event:', event, 'Data:', data);
+    // data.message,
+    // data.title,
+    // data.count,
+    // data.sound,
+    // data.image,
+    // data.additionalData
+  });
+
+  // triggered every time error occurs
+  $mfwiPush.onNotificationError(function (event, e) {
+    // e.message
+    $log.error('PUSH error. Event:', event, 'Error:', e);
+  });
+}
 ```
 
-
-* **Important** do not nest `.then()` calls before assigning the promise to a variable or you'll lose the reference to the original action promise. Then you won't be able to get its identifier.
-
-
-### Event notifications per action idendifier
-
-* Receive all action events by listening to: `mfw:Action.<actionId>.*`. You'll receive events like:
-	* `mfw:Action.<actionId>.running`: action start
-	* `mfw:Action.<actionId>.finished`: action finished successfully
-	* `mfw:Action.<actionId>.error`: action finished with error
-
-```js
-var actionPromise = $mfwActions.newAction(fn); // fn implements your logic
-$scope.$listenTo($mfwActionStore, $mfwActionStore.allEvents(actionPromise), callback);
-// or...
-//$scope.$listenTo($mfwActionStore, $mfwActionStore.finishEvent(actionPromise), callback);
-//$scope.$listenTo($mfwActionStore, $mfwActionStore.errorEvent(actionPromise), callback);
-```
-
-
-### Event notifications per action status
-
-* Receive all events of a specific type by listening to: `mfw:Action.<status>.*`. You'll receive events like:
-	* `mfw:Action.running.<actionId>`: actions start
-	* `mfw:Action.finished.<actionId>`: actions finished successfully
-	* `mfw:Action.error.<actionId>`: actions finished with error
-
-```js
-$scope.$listenTo($mfwActionStore, $mfwActionStore.allEvents(), callback);
-$scope.$listenTo($mfwActionStore, $mfwActionStore.finishEvent(), callback);
-$scope.$listenTo($mfwActionStore, $mfwActionStore.errorEvent(), callback);
-```
-
-> Useful to implement loggers, to measure network requests performance, etc.
 
 
 ## Development
@@ -117,25 +123,35 @@ $scope.$listenTo($mfwActionStore, $mfwActionStore.errorEvent(), callback);
 > **Important**: Run `npm run deliver` before committing anything. This will build documentation and distribution files.
 > It's a shortcut for running both `docs` and `build` scritps.
 
+
 ### NPM commands
 
 * Bower: install Bower dependencies in `bower_components/` folder:
+
 ```shell
 $ npm run bower
 ```
+
 * Build: build distributable binaries in `dist/` folder:
+
 ```shell
 $ npm run build
 ```
+
 * Documentation: generate user documentation (using `ngDocs`):
+
 ```shell
 $ npm run docs
 ```
+
 * Linting: run *linter* (currently JSHint):
+
 ```shell
 $ npm run lint
 ```
+
 * Deliver: **run it before committing to Git**. It's a shortcut for `docs` and `build` scripts:
+
 ```shell
 $ npm run deliver
 ```

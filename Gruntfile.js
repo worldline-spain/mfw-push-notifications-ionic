@@ -48,9 +48,11 @@ module.exports = function (grunt) {
     },
     ngdocs: {
       options: {
-        startPage: '/api/mfwi.notifications.push',
+        startPage: '/api/mfw-ionic.notifications.push',
         title: false,
         html5Mode: false,
+        editLink: false,
+        editExample: false,
         dest: 'docs'
       },
       api: {
