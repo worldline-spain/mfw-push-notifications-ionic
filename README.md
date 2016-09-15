@@ -54,11 +54,9 @@ Now you can inject both `$mfwiPush` services to register for push notifications 
 Enable or disable push registration and set proper [platform configuration](https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md#pushnotificationinitoptions).
 
 ```js
-// Inject $mfwiPush in angular.module phase.
 angular
-  .module('wl.social-care')
-  .config(configPush)
-  .run(handlePushes);
+  .module('your-module')
+  .config(configPush);
 
 configPush.$inject = ['$mfwiPushProvider'];
 function configPush($mfwiPushProvider) {
@@ -82,6 +80,10 @@ function configPush($mfwiPushProvider) {
 Listen for push notifications and errors.
 
 ```js
+angular
+  .module('your-module')
+  .run(handlePushes);
+
 handlePushes.$inject = ['$log', '$mfwiPush'];
 function handlePushes($log, $mfwiPush) {
   $mfwiPush.getToken().then(function (token) {

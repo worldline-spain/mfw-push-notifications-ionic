@@ -37,10 +37,10 @@
    * @description
    * Provider for {@link mfw-ionic.notifications.push.service:$mfwiPush `$mfwiPush`} service.
    */
-  PushModule.provider('$mfwiPush', pushProvider);
-  function pushProvider() {
-    var token = undefined;
-    var registrationPromise = undefined;
+  PushModule.provider('$mfwiPush', PushProvider);
+  function PushProvider() {
+    var token;
+    var registrationPromise;
 
     var pushOptions = {
       enabled: false
