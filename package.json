@@ -11,7 +11,7 @@
   "files": [
     "src"
   ],
-  "main": "dist/mfw-business-action.store.js",
+  "main": "dist/mfw-ionic.push.service.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/worldline-spain/mfw-push-notifications-ionic"

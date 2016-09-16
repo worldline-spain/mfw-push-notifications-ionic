@@ -12,9 +12,16 @@ This module offers an abstraction of ngCordova's [`$cordovaPushV5`](http://ngcor
 
 ## Installation
 
+### Plugins
+
+This module requires the following Cordova plugins:
+
+* [phonegap-plugin-push](https://github.com/phonegap/phonegap-plugin-push)
+
+
 ### Via Bower
 
-Use repository URL and version tag until module is published in a Bower registry.
+Get module from Bower registry.
 
 ```shell
 $ bower install --save mfw-push-notifications-ionic
@@ -41,7 +48,7 @@ angular
   ]);
 ```
 
-Now you can inject both `$mfwiPush` services to register for push notifications and callbacks with new incomming messages or errors.
+Now you can inject `$mfwiPush` service to register for push notifications and callbacks with new incoming messages or errors.
 
 
 > For further documentation, please read the generated `ngDocs` documentation inside `docs/` folder.
@@ -114,14 +121,14 @@ function handlePushes($log, $mfwiPush) {
 ## Development
 
 * Use Gitflow
-* Update both package.json and bower.json versions
-* Tag Git with same version numbers as NPM and Bower versions
+* Update package.json version
+* Tag Git with same version numbers as NPM
 * Check for valid `ngDocs` output inside `docs/` folder
 
 > **Important**: Run `npm install` before anything. This will install NPM and Bower dependencies.
 
 > **Important**: Run `npm run deliver` before committing anything. This will build documentation and distribution files.
-> It's a shortcut for running both `docs` and `build` scritps.
+> It's a shortcut for running both `docs` and `build` scripts.
 
 
 ### NPM commands
