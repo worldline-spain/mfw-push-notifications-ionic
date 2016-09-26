@@ -1,6 +1,6 @@
 {
   "name": "mfw-push-notifications-ionic",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MFW Push notifications library for Ionic 1.* apps",
   "author": "Juan Belmonte Rodríguez <juan.belmonte@worldline.com> (https://github.com/jbelmonte)",
   "contributors": [
@@ -11,7 +11,7 @@
   "files": [
     "src"
   ],
-  "main": "dist/mfw-business-action.store.js",
+  "main": "dist/mfw-ionic.push.service.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/worldline-spain/mfw-push-notifications-ionic"
