@@ -1,4 +1,4 @@
-# MFW Ionic Push v1.0.0
+# MFW Ionic Push v1.0.1
 
 This AngularJS module provides a push notifications API as part of **Mobile FrameWork (MFW)** for **Ionic** applications.
 
